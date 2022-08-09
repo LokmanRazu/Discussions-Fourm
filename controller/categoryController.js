@@ -76,3 +76,20 @@ try{
     next(e)
   }  
 };
+
+exports.deleteCategory = async (req,res,next)=>{
+    try{
+        const deleteCategory = await Category.findByIdAndDelete(req.params.id);
+
+        res.status(200).json({
+            status:'SUCCESS',
+            data:{
+           deleteCategory
+            }
+        })
+
+    }catch(e){
+        console.log(`I am from DeleteCategory and Error is : ${e}`)
+        next(e)
+    }
+};
