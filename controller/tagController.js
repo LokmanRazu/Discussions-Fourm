@@ -7,7 +7,7 @@ const tags = await Tag.find();
 
 res.status(200).json({
     status:'SUCCESS',
-    result:tag.length,
+    result:tags.length,
     data:{
         tags
     }

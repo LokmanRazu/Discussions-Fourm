@@ -1,4 +1,6 @@
 const { Schema,model, default: mongoose } = require('mongoose');
+const Tag = require('./tag')
+const Category = require('./category')
 
 const postSchema = new Schema({
     title:{
@@ -9,7 +11,7 @@ const postSchema = new Schema({
     },
     category:{
         type:Schema.Types.ObjectId,
-        ref:'Category'
+        ref:Category
     },
     body:{
         type:String,
@@ -20,7 +22,7 @@ const postSchema = new Schema({
     },
     tags:{
         type:Schema.Types.ObjectId,
-        ref:'Tag'
+        ref:Tag
     },
     isAnonymus:{
         type:Boolean,
