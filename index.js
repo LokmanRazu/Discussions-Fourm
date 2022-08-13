@@ -6,7 +6,7 @@ const categoryRoutes = require('./router/categoryRoutes');
 const tagRoutes = require('./router/tagRouter');
 
 const app = express();
-app.use(express.json())
+app.use(express.json());
 
 
 app.use('/api/v1/user',userRoutes);
@@ -35,4 +35,4 @@ mongoose.connect(`mongodb+srv://lokman:pass12345@cluster0.oroe6kh.mongodb.net/?r
 const PORT = 8080;
 app.listen(PORT,()=>{
     console.log(`app is running in ${PORT}`);
-})
+});
