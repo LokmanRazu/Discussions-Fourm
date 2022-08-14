@@ -1,10 +1,11 @@
-const { Schema,model, default: mongoose } = require('mongoose');
+const { Schema,model } = require('mongoose');
 const Tag = require('./tag')
 const Category = require('./category')
 
 const postSchema = new Schema({
     title:{
         type:String,
+        unique:true,
         maxlength:20,
         trim:true
 
@@ -30,13 +31,11 @@ const postSchema = new Schema({
     },
     voteCount:{
         type:Number,
-        required:true,
         default:0
 
     },
     viewCount:{
         type:Number,
-        required:true,
         default:0
     }
 

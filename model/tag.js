@@ -21,5 +21,5 @@ tagSchema.pre('save', function(){
     this.slug = this.name.toLowerCase().split(' ').join('-') + '-' + Date.now();
 })
 
-const Tag = model('Tag',tagSchema)
+const Tag = model('Tag',tagSchema);
 module.exports = Tag;

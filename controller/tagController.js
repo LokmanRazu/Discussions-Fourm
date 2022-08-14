@@ -1,4 +1,3 @@
-const { castObject, findByIdAndDelete } = require('../model/tag');
 const Tag = require('../model/tag')
 
 exports.getTag = async (req,res,next)=>{
@@ -48,7 +47,6 @@ exports.postTag =async (req,res,next)=>{
 
         res.status(200).json({
             status:'SUCCESS',
-            result:Tag.length,
             data:{
                 postTag
             }
@@ -80,7 +78,7 @@ exports.updateTag = async (req,res,next)=>{
 
 exports.deteleTag = async (req,res,next)=>{
 try{
-    const deleteTag = await findByIdAndDelete(req.params.id);
+     await Tag.findByIdAndDelete(req.params.id);
 
     res.status(200).json({
         status:'SUCCESS'

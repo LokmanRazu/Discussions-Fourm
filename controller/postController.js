@@ -43,13 +43,12 @@ exports.postPost = async (req,res,next) =>{
             title,category,body,tags,isAnonymus,voteCount,viewVote
         })
 
-        const CreatedPost = await post.save();
-
+            await post.save();
 
         res.status(200).json({
             status:'SUCCESS',
             data:{
-                CreatedPost
+                post
             }
         })
 

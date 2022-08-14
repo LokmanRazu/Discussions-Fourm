@@ -1,9 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config({path:'./config.env'});
 
+//   Router
 const userRoutes = require('./router/userRoutes');
 const categoryRoutes = require('./router/categoryRoutes');
 const tagRoutes = require('./router/tagRouter');
+const postRoutes = require('./router/postRoutes')
 
 const app = express();
 app.use(express.json());
@@ -11,7 +15,8 @@ app.use(express.json());
 
 app.use('/api/v1/user',userRoutes);
 app.use('/api/v1/category',categoryRoutes);
-app.use('/api/v1/tags',tagRoutes)
+app.use('/api/v1/tags',tagRoutes);
+app.use('/api/v1/posts',postRoutes);
 
 
 app.get('/',(req,res)=>{
