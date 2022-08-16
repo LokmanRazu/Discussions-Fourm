@@ -22,7 +22,6 @@ exports.getSinglecategory = async (req,res,next)=>{
 exports.getCategory = async (req,res,next)=>{
     try{
         const category = await Category.find();
-
         res.status(200).json({
             status:'SUCCESS',
             result:category.length,

@@ -3,7 +3,7 @@ const Tag = require('../model/tag')
 exports.getTag = async (req,res,next)=>{
 try{
 const tags = await Tag.find();
-
+console.log(req.query)
 res.status(200).json({
     status:'SUCCESS',
     result:tags.length,
@@ -20,7 +20,7 @@ res.status(200).json({
 
 exports.getSingleTag = async (req,res,next)=>{
     try{
-        const tag = await Tag.findById(req.params.id)
+        const tag = await Tag.findById(req.params.id);
 
         res.status(200).json({
             status:'SUCCESS',
@@ -29,7 +29,7 @@ exports.getSingleTag = async (req,res,next)=>{
             }
         })
     }catch(e){
-        console.log(`I am from GetSingleTag and Error is : ${e}`)
+        console.log(`I am from GetSingleTag and Error is : ${e}`);
         next(e)
     }
 };
