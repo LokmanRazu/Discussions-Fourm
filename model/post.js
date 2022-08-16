@@ -12,7 +12,7 @@ const postSchema = new Schema({
     },
     category:{
         type:Schema.Types.ObjectId,
-        ref:Category
+        ref:'Category'
     },
     body:{
         type:String,
@@ -23,7 +23,7 @@ const postSchema = new Schema({
     },
     tags:{
         type:Schema.Types.ObjectId,
-        ref:Tag
+        ref:'Tag'
     },
     isAnonymus:{
         type:Boolean,
@@ -39,7 +39,14 @@ const postSchema = new Schema({
         default:0
     }
 
-},{timestamps:true});
+},{timestamps:true}); 
+
+postSchema.pre(/^find/,function(){
+    this.populate({
+        path:'category',
+        select:'name'
+    })
+})
 
 const Post = model('Post',postSchema);
 module.exports = Post;
