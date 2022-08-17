@@ -30,6 +30,10 @@ exports.authentication = async (req,res,next)=>{
 
     }catch(e){
         console.log(`I am from Authentication Middleware and Error is : ${e}`)
-        next(e) ;
+
+        return res.status(403).json({
+            mesage:e
+        })
+
     }
 }

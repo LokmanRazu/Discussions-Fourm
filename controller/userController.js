@@ -1,6 +1,9 @@
 const bcrypt = require('bcrypt');
+const e = require('express');
 const jwt = require('jsonwebtoken')
 const User = require('../model/user')
+const sendMail = require('../utils/email');
+const crypto = require('crypto')
 
 exports.getUser =async (req,res,next)=>{
     try{
@@ -83,3 +86,40 @@ exports.LoggedInUser =async (req,res,next)=>{
     
 
 };
+
+exports.forgetPassword =async (req,res,next)=>{
+try{
+    // 1. Get user based on POSTed Email
+    const user = await User.findOne({ email:req.body.email})
+    if(!user){
+        return next();
+    };
+             // 2.Generate the random reset token
+             const resetToken = user.CreatePasswordResetToken()
+                console.log(`resettoken isss ${resetToken}`)
+             await user.save();
+
+         //  3.Send it to user Email
+         const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
+         const message = `forgot Your Password? submit a patch request with your new pasword: ${resetURL}.
+         If you did not forget your password,Please Ignore thios email`;
+
+         try{
+            await sendMail ({ email:user.email, subject:'Your password reset Token', message });
+            res.status(200).json({
+               status:'success',
+               message:'Token sent to email'
+            })
+         }catch(e){
+             user.PasswordResetToken = undefined
+             user.passwordResetExpires = undefined
+             await user.save()
+            return next(e);
+         }
+
+
+}catch(e){
+    console.log(`I am from Forget password and Error is : ${e}`)
+    next(e) ;
+}
+}
