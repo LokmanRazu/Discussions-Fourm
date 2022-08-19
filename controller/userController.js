@@ -122,4 +122,40 @@ try{
     console.log(`I am from Forget password and Error is : ${e}`)
     next(e) ;
 }
-}
+};
+
+// Reset password
+exports.resetPassword =async (req,res,next)=>{
+    try{
+    // 1.Get user based on Token
+    const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
+    console.log('hashedToken: ',hashedToken)
+    const user = await User.findOne({PasswordResetToken:hashedToken,passwordResetExpires:{ $gt: Date.now() }});
+    console.log('user :',user)
+
+    // 2.If token has not expired, and there is user,set the new password
+    if(!user){
+        return next(new appError('Token is invalid or has expired',400))
+    }
+    user.password = req.body.password;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    const newUser = await user.save();
+    console.log('newuser :',newUser)
+    // 3. Update ChangedPasswordAt property for the user
+
+    // 4. Log the user in, sent JWT
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET ,{ expiresIn:process.env.JWT_EXPIRES_IN });
+    console.log('token: ',token)
+    res.status(200).json({
+        status:'sucsess',
+        data:{
+            token
+        }
+    })
+
+    }catch(e){
+        console.log(`I am from Reset Password and error is : ${e}`)
+        next(e);
+    }
+};
