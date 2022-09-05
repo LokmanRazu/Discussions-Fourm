@@ -24,7 +24,7 @@ app.get('/',(req,res)=>{
     res.send('hello')
 })
 
-
+// Its Should be the Last Middleware
 app.all('*',(req,res,next)=>{
     res.status(404).json({
         status:'fail',
