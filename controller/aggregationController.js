@@ -7,7 +7,7 @@ exports.getTagAggreation =async (req,res,next)=>{
         ])
 
     }catch(e){
-        console.log(`I am from Aggregation Controller and error is : ${e}`)
-        next(e)
+        console.log(`I am from Aggregation Controller and error is : ${e}`);
+        next(e);
     }
 }
